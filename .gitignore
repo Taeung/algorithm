@@ -1,0 +1,9 @@
+*.out
+*.swp
+*.o
+*.o.*
+*.patch
+cscope.*
+*.orig
+*~
+\#*#
