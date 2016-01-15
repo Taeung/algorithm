@@ -60,11 +60,49 @@ void grouping_papers(unsigned int len, int **papers_list,
 	/* Reading two line, group each paper
 	 * following row and column.
 	 */
+	for (int j = 0; j < 2; j++) {
+		int *papers = papers_list[line_num++];
+		int index = 0;
+
+		for (int k = 0; k < len; k++) {
+			row[k].paper[j*2] = papers[index++];
+			row[k].paper[j*2+1] = papers[index++];
+		}
+		free(papers);
+	}
 }
 
 void  parse_papers(unsigned int len, int **papers_list)
 {
 	/* Grouping and count papers */
+	struct paper_group *g_papers;
+	int line_num = 0;
+	int *next_papers;
+	int **next_papers_list;
+
+	len = len/2;
+	next_papers_list = (int **)malloc(sizeof(int *) * len);
+
+	for (int i = 0; i < len; i++) {
+		struct paper_group *row =
+			(struct paper_group *)malloc(sizeof(struct paper_group) * len);
+
+		/* A row per two line */
+		grouping_papers(len, papers_list, line_num, row);
+		line_num += 2;
+
+		next_papers = (int *)malloc(sizeof(int) * len);
+		for (int j = 0; j < len; j++)
+			next_papers[j] = count_papers(len, &row[j]);
+		next_papers_list[i] = next_papers;
+		free(row);
+	}
+	free(papers_list);
+
+	if (len == 1)
+		return;
+	else
+		parse_papers(len, next_papers_list);
 }
 
 bool check_range(int len)
