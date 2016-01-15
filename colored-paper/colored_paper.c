@@ -7,30 +7,19 @@
 #include <stdio.h>
 
 struct paper_group {
-	unsigned int value;
 	unsigned int paper[4];
 };
 
-struct group grouping_paper(struct paper_group g_papers[])
+void grouping_papers(unsigned int len, int **papers_list,
+		    int line_num, struct paper_group *row)
 {
-	struct group paper_group g_paper;
-
-	/* Group each paper with the rule that
-	 * same colored paper should be grouped.
+	/* Reading two line, group each paper
+	 * following row and column.
 	 */
-
-	return g_paper;
 }
 
-struct group parse_paper_array(usigned int papers[])
+void  parse_papers(unsigned int len, int **papers_list)
 {
-	struct group paper_group g_paper;
-
-	/* Reading two line, assign each value to
-	 * each paper group following row and column.
-	 */
-
-	return g_paper;
 }
 
 int main(int argc, const char **argv)
