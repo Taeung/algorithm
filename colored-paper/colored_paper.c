@@ -10,6 +10,8 @@
 #include <string.h>
 
 #define MAX_WIDTH 256
+#define WHITE 0
+#define BLUE 1
 
 struct paper_group {
 	unsigned int paper[4];
@@ -17,6 +19,40 @@ struct paper_group {
 
 unsigned int white;
 unsigned int blue;
+
+int count_papers(int len, struct paper_group *g_paper)
+{
+	int sum, b, w;
+
+	sum = b = w = 0;
+	for (int i = 0; i < 4; i++) {
+		int paper = g_paper->paper[i];
+
+		if (paper == BLUE)
+			b++;
+		else if (paper == WHITE)
+			w++;
+		sum += paper;
+	}
+
+	/* If current length is 1, it is the last. */
+	if (sum == 0) {
+		if (len == 1)
+			blue++;
+		else
+			return BLUE;
+	} else if (sum == 4) {
+		if (len == 1)
+			white++;
+		else
+			return WHITE;
+	} else {
+		blue += b;
+		white += w;
+	}
+
+	return -1;
+}
 
 void grouping_papers(unsigned int len, int **papers_list,
 		    int line_num, struct paper_group *row)
@@ -28,6 +64,7 @@ void grouping_papers(unsigned int len, int **papers_list,
 
 void  parse_papers(unsigned int len, int **papers_list)
 {
+	/* Grouping and count papers */
 }
 
 bool check_range(int len)
