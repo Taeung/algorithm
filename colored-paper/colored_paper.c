@@ -61,13 +61,13 @@ void grouping_papers(unsigned int len, int **papers_list,
 	/* Reading two line, group each paper
 	 * following row and column.
 	 */
-	for (int j = 0; j < 2; j++) {
+	for (int i = 0; i < 2; i++) {
 		int *papers = papers_list[line_num++];
 		int index = 0;
 
-		for (int k = 0; k < len; k++) {
-			row[k].paper[j*2] = papers[index++];
-			row[k].paper[j*2+1] = papers[index++];
+		for (int j = 0; j < len; j++) {
+			row[j].paper[i*2] = papers[index++];
+			row[j].paper[i*2+1] = papers[index++];
 		}
 		free(papers);
 	}
