@@ -160,6 +160,6 @@ int main(int argc, const char **argv)
 
 	/* The numbers of white and blue paper */
 	printf("%d\n", white);
-	printf("%d\n", blue);
+	printf("%d", blue);
 	return 0;
 }
