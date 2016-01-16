@@ -22,9 +22,9 @@ unsigned int blue;
 
 int count_papers(int len, struct paper_group *g_paper)
 {
-	int sum, b, w;
+	int b, w, skip;
 
-	sum = b = w = 0;
+	b = w = skip = 0;
 	for (int i = 0; i < 4; i++) {
 		int paper = g_paper->paper[i];
 
@@ -32,25 +32,24 @@ int count_papers(int len, struct paper_group *g_paper)
 			b++;
 		else if (paper == WHITE)
 			w++;
-		if (paper != -1)
-			sum += paper;
+		else
+			skip++;
 	}
 
-	/* If current length is 1, it is the last. */
-	if (sum == 0) {
+	if (w == 4) {
+		/* If current length is 1, it is the last. */
 		if (len == 1)
 			white++;
-		else
-			return WHITE;
-	} else if (sum == 4) {
+		return WHITE;
+	} else if (b == 4) {
 		if (len == 1)
 			blue++;
-		else
-			return BLUE;
-	} else {
-		blue += b;
-		white += w;
-	}
+		return BLUE;
+	} else if (skip == 4)
+		return -1;
+
+	blue += b;
+	white += w;
 
 	return -1;
 }
