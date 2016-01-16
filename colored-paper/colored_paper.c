@@ -32,20 +32,21 @@ int count_papers(int len, struct paper_group *g_paper)
 			b++;
 		else if (paper == WHITE)
 			w++;
-		sum += paper;
+		if (paper != -1)
+			sum += paper;
 	}
 
 	/* If current length is 1, it is the last. */
 	if (sum == 0) {
 		if (len == 1)
-			blue++;
-		else
-			return BLUE;
-	} else if (sum == 4) {
-		if (len == 1)
 			white++;
 		else
 			return WHITE;
+	} else if (sum == 4) {
+		if (len == 1)
+			blue++;
+		else
+			return BLUE;
 	} else {
 		blue += b;
 		white += w;
