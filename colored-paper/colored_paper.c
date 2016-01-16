@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MAX_WIDTH 256
+#define MAX_WIDTH 512
 #define WHITE 0
 #define BLUE 1
 
