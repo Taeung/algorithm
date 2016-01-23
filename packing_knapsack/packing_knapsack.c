@@ -12,7 +12,6 @@
 #define MAX_INPUT 16
 
 struct knapsack {
-	unsigned int limited_wgt;
 	unsigned int max_price;
 };
 
@@ -77,7 +76,8 @@ int main(int argc, const char **argv)
 			return -1;
 	}
 
-	knapsack_list = malloc(sizeof(struct knapsack) * limited_wgt);
+	/* from 0 to last limited weight */
+	knapsack_list = malloc(sizeof(struct knapsack) * (limited_wgt + 1));
 
 	for (int i = 0; i < nr_jewels; i++) {
 		struct jewelry **usable_jewels = malloc(sizeof(struct jewelry *)
@@ -89,7 +89,7 @@ int main(int argc, const char **argv)
 		free(usable_jewels);
 	}
 
-	printf("%d\n", knapsack_list[limited_wgt-1].max_price);
+	printf("%d\n", knapsack_list[limited_wgt].max_price);
 	free(jewels);
 	free(knapsack_list);
 	return 0;
