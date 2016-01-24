@@ -12,28 +12,31 @@
 #define MAX_INPUT 16
 
 struct knapsack {
-	unsigned int max_price;
-};
+	unsigned int maxprice;
+} *knapsack_list;
 
 struct jewelry {
 	unsigned int wgt;
 	unsigned int price;
 };
 
-void pack_knapsack(struct knapsack *knapsack_list,
-		      struct jewelry **usable_jewels)
+unsigned int limited_wgt;
+
+unsigned int get_cond_maxprice(int wgt, struct jewelry *jewelry)
+{
+	/* Get maximum price based on a specific weight
+	 * following a specific jewelry.
+	 */
+}
+
+void pack_knapsack(struct jewelry *jewelry)
 {
 	/* Case by case pack knapsack following maximum
 	 * price per limited weight.
 	 */
 }
 
-int get_maxprice(struct knapsack *knapsack_list, struct jewelry *jewelry)
-{
-	/* Get maximum price based on limited weight */
-}
-
-bool get_values_from(char *input, int *val1, int *val2)
+bool get_values_from(char *input, unsigned int *val1, unsigned int *val2)
 {
 	char *ptr = input;
 
@@ -79,17 +82,10 @@ int main(int argc, const char **argv)
 	/* from 0 to last limited weight */
 	knapsack_list = malloc(sizeof(struct knapsack) * (limited_wgt + 1));
 
-	for (int i = 0; i < nr_jewels; i++) {
-		struct jewelry **usable_jewels = malloc(sizeof(struct jewelry *)
-							* (i + 1));
+	for (int i = 0; i < nr_jewels; i++)
+		pack_knapsack(&jewels[i]);
 
-		for (int j = 0; j <= i; j++)
-			usable_jewels[i] = &jewels[j];
-		pack_knapsack(knapsack_list, usable_jewels);
-		free(usable_jewels);
-	}
-
-	printf("%d\n", knapsack_list[limited_wgt].max_price);
+	printf("%d\n", knapsack_list[limited_wgt].maxprice);
 	free(jewels);
 	free(knapsack_list);
 	return 0;
