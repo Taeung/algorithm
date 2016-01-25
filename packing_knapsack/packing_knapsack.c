@@ -58,11 +58,9 @@ bool get_values_from(char *input, unsigned int *val1, unsigned int *val2)
 
 int main(int argc, const char **argv)
 {
-	char input[MAX_INPUT];
-	char *ptr = input;
-	int nr_jewels, limited_wgt;
 	struct jewelry *jewels;
-	struct knapsack *knapsack_list;
+	char input[MAX_INPUT];
+	unsigned int nr_jewels;
 
 	fgets(input, sizeof(input), stdin);
 	if (get_values_from(input, &nr_jewels, &limited_wgt) == false)
@@ -82,10 +80,13 @@ int main(int argc, const char **argv)
 	/* from 0 to last limited weight */
 	knapsack_list = malloc(sizeof(struct knapsack) * (limited_wgt + 1));
 
+	for (int i = 0; i <= limited_wgt; i++)
+		knapsack_list[i].maxprice = 0;
+
 	for (int i = 0; i < nr_jewels; i++)
 		pack_knapsack(&jewels[i]);
 
-	printf("%d\n", knapsack_list[limited_wgt].maxprice);
+	printf("%d", knapsack_list[limited_wgt].maxprice);
 	free(jewels);
 	free(knapsack_list);
 	return 0;
