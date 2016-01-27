@@ -27,6 +27,19 @@ unsigned int get_cond_maxprice(int wgt, struct jewelry *jewelry)
 	/* Get maximum price based on a specific weight
 	 * following a specific jewelry.
 	 */
+	unsigned int nr_cases = wgt/jewelry->wgt;
+	unsigned int maxprice = 0;
+
+	for (int i = 1; i <= nr_cases; i++) {
+		unsigned int price, rest_wgt;
+
+		rest_wgt = wgt - (i * jewelry->wgt);
+		price = (i * jewelry->price) + knapsack_list[rest_wgt].maxprice;
+		if (maxprice < price)
+			maxprice = price;
+	}
+
+	return maxprice;
 }
 
 void pack_knapsack(struct jewelry *jewelry)
@@ -34,6 +47,17 @@ void pack_knapsack(struct jewelry *jewelry)
 	/* Case by case pack knapsack following maximum
 	 * price per limited weight.
 	 */
+	if (limited_wgt < jewelry->wgt)
+		return;
+
+	for (int wgt = 0; wgt <= limited_wgt; wgt++) {
+		if (jewelry->wgt <= wgt) {
+			unsigned int maxprice = get_cond_maxprice(wgt, jewelry);
+
+			if (knapsack_list[wgt].maxprice < maxprice)
+				knapsack_list[wgt].maxprice = maxprice;
+		}
+	}
 }
 
 bool get_values_from(char *input, unsigned int *val1, unsigned int *val2)
