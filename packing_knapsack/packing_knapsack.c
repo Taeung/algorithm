@@ -114,7 +114,7 @@ int main(int argc, const char **argv)
 	for (i = 0; i < nr_jewels; i++)
 		pack_knapsack(&jewels[i]);
 
-	printf("%d", knapsack_list[limited_wgt].maxprice);
+	printf("%d\n", knapsack_list[limited_wgt].maxprice);
 	free(jewels);
 	free(knapsack_list);
 	return 0;
