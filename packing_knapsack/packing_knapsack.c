@@ -65,9 +65,16 @@ void pack_knapsack(struct jewelry *jewelry)
 
 bool get_values_from(char *input, unsigned int *val1, unsigned int *val2)
 {
-	char *ptr = input;
+	char *arg;
+	char *ptr = strdup(input);
 
-	*val1 = atoi(strsep(&ptr, " "));
+	if (!ptr) {
+		printf("%s: strdup failed\n", __func__);
+		exit(1);
+	}
+
+	arg = strsep(&ptr, " ");
+	*val1 = atoi(arg);
 	if (ptr == NULL) {
 		printf("Error: Need a whitespace\n");
 		return false;
