@@ -82,11 +82,6 @@ bool get_values_from(char *input, unsigned int *val1, unsigned int *val2)
 
 	*val2 = atoi(ptr);
 
-	if (*val1 == 0 || *val2 == 0) {
-		printf("Error: Input have to contain only numbers\n");
-		return false;
-	}
-
 	return true;
 }
 
