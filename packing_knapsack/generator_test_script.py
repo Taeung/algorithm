@@ -19,4 +19,4 @@ for i in range(1,nr):
 
 j_p = random.randrange(1,w)
 j_w = random.randrange(1,w)
-test_script.write(str(j_p)+" "+str(j_w)+"\\n\" | ./a.out")
+test_script.write(str(j_p)+" "+str(j_w)+"\\n\" | ./$1")
