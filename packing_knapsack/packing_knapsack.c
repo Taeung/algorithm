@@ -28,19 +28,11 @@ unsigned int get_cond_maxprice(int wgt, struct jewelry *jewelry)
 	 * following a specific jewelry.
 	 */
 	int i;
-	unsigned int nr_cases = wgt/jewelry->wgt;
-	unsigned int maxprice = 0;
+	int rest_wgt = wgt - jewelry->wgt;
+	int price = jewelry->price + knapsack_list[rest_wgt].maxprice;
 
-	for (i = 1; i <= nr_cases; i++) {
-		unsigned int price, rest_wgt;
-
-		rest_wgt = wgt - (i * jewelry->wgt);
-		price = (i * jewelry->price) + knapsack_list[rest_wgt].maxprice;
-		if (maxprice < price)
-			maxprice = price;
-	}
-
-	return maxprice;
+	return knapsack_list[wgt].maxprice < price ?
+		price : knapsack_list[wgt].maxprice;
 }
 
 void pack_knapsack(struct jewelry *jewelry)
