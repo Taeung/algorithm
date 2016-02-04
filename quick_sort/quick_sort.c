@@ -6,24 +6,31 @@
  */
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
-void quick_sort(int num[])
+#define ASCEND true
+#define DESCEND false
+
+bool sort_order;
+
+int *quick_sort(int num[], int len)
 {
 }
 
 int main(int argc, const char **argv)
 {
 	int *num_arr;
-	unsigned int nr, order, i;
+	unsigned int len, order, i;
 
-	scanf("%d", &nr);
-	num_arr = malloc(sizeof(int) * nr);
+	scanf("%d", &len);
+	num_arr = malloc(sizeof(int) * len);
 	scanf("%d", &order);
+	sort_order = order == 0 ? ASCEND : DESCEND;
 
-	for (i = 0; i < nr; i++)
+	for (i = 0; i < len; i++)
 		scanf("%d", &num_arr[i]);
 
-	quick_sort(num_arr);
+	num_arr = quick_sort(num_arr, len);
 
 	return 0;
 }
