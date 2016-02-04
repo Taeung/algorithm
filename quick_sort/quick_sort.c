@@ -13,8 +13,15 @@
 
 bool sort_order;
 
-int *quick_sort(int num[], int len)
+int *merge_arr(int *left, int med, int *right,
+	       int lft_len, int rgt_len)
 {
+	return 0;
+}
+
+int *quick_sort(int *num_arr, int len)
+{
+	return 0;
 }
 
 int main(int argc, const char **argv)
