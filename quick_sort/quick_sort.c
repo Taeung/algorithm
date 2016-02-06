@@ -31,7 +31,39 @@ int *merge_arr(int *left, int med, int *right,
 int split_arr(int *num_arr, int **left, int med,
 	      int **right, int len)
 {
-	return 0;
+	int i, lft_idx, rgt_rev_idx;
+	int lft_len, rgt_len;
+	int *temp;
+
+	len = len - 1;
+	temp = malloc(sizeof(int) * len);
+	lft_idx = 0;
+	rgt_rev_idx = len - 1;
+
+	for (i = 0; i < len; i++) {
+		int index;
+
+		if (med < num_arr[i])
+			index = sort_order == ASCEND ?
+				rgt_rev_idx : lft_idx;
+		else
+			index = sort_order == ASCEND ?
+				lft_idx : rgt_rev_idx;
+
+		temp[index] = num_arr[i];
+		index == lft_idx ? lft_idx++ : rgt_rev_idx--;
+	}
+
+	lft_len = lft_idx;
+	rgt_len = len - lft_len;
+	*left = malloc(sizeof(int) * lft_len);
+	*right = malloc(sizeof(int) * rgt_len);
+
+	memcpy(temp, left, lft_len);
+	memcpy(&temp[lft_len], right, rgt_len);
+	free(temp);
+
+	return lft_len;
 }
 
 int *quick_sort(int *num_arr, int len)
