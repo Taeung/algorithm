@@ -25,7 +25,7 @@ int *merge_arr(int *left, int med, int *right,
 	free(left);
 	free(right);
 
-	return 0;
+	return merged_arr;
 }
 
 int split_arr(int *num_arr, int **left, int med,
