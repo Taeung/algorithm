@@ -109,5 +109,8 @@ int main(int argc, const char **argv)
 
 	num_arr = quick_sort(num_arr, len);
 
+	for (i = 0; i < len; i++)
+		printf("%d\n", num_arr[i]);
+
 	return 0;
 }
