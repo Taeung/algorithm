@@ -19,9 +19,9 @@ int *merge_arr(int *left, int med, int *right,
 {
 	int *merged_arr = malloc(sizeof(int) * (lft_len + rgt_len));
 
-	memcpy(left, merged_arr, lft_len);
+	memcpy(merged_arr, left, sizeof(int) * lft_len);
 	merged_arr[lft_len] = med;
-	memcpy(right, &merged_arr[lft_len+1], rgt_len);
+	memcpy(&merged_arr[lft_len+1], right, sizeof(int) * rgt_len);
 	free(left);
 	free(right);
 
@@ -59,8 +59,8 @@ int split_arr(int *num_arr, int **left, int med,
 	*left = malloc(sizeof(int) * lft_len);
 	*right = malloc(sizeof(int) * rgt_len);
 
-	memcpy(temp, left, lft_len);
-	memcpy(&temp[lft_len], right, rgt_len);
+	memcpy(left, temp, sizeof(int) * lft_len);
+	memcpy(right, &temp[lft_len], sizeof(int) * rgt_len);
 	free(temp);
 
 	return lft_len;
