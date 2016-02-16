@@ -16,6 +16,16 @@ struct cell{
 	struct cell *next;
 };
 
+/* The cheese board has all cheese cell*/
+struct cell **cheese_board;
+
+/* The cheese line mean cheese cell list
+ * that are sequentially connected. But
+ * it should be end line of some cheese chunk.
+ */
+struct cell **cheese_lines;
+int nr_lines;
+
 void melt_cheese_lines()
 {
 }
@@ -25,8 +35,14 @@ struct cell *find_linked_cheeses(struct cell *cell)
 	return cell;
 }
 
-bool contains(struct cell *cheese_lines[], struct cell cell)
+bool is_inner(struct cell cell)
 {
+	/* Check whether this cell is inner
+	 * each cheese end line. Even if a cell
+	 * is one of cheese end line, treat it
+	 * as inner the line.
+	 */
+
 	return true;
 }
 
@@ -77,7 +93,7 @@ int main(int argc, const char **argv)
         col = atoi(ptr);
 
         if (check_range(col, row)) {
-                struct cell **cheese_board = malloc(sizeof(struct cell*) * row);
+                cheese_board = malloc(sizeof(struct cell*) * row);
 
                 for (i = 0; i < row; i++) {
 			struct cell *chse_bd_row = malloc(sizeof(struct cell) * col);
