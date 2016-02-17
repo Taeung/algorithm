@@ -28,6 +28,19 @@ int nr_lines;
 
 void melt_cheese_lines()
 {
+	int i;
+
+	for (i = 0; i < nr_lines; i++) {
+		struct cell *cheese_line = cheese_lines[i];
+
+		while (cheese_line) {
+			cheese_line->has_cheese = false;
+			cheese_line = cheese_line->next;
+		}
+	}
+
+	nr_lines = 0;
+	free(cheese_board);
 }
 
 struct cell *find_linked_cheeses(struct cell *cell)
@@ -71,6 +84,7 @@ int get_values(int nr, struct cell *chse_bd_row, char *input)
 	for (i = 0; i < nr; i++) {
 		arg = strsep(&ptr, " ");
 		chse_bd_row[i].has_cheese = atoi(arg);
+		chse_bd_row[i].next = NULL;
 	}
 
 	return 0;
