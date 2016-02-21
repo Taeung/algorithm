@@ -19,27 +19,28 @@ struct cell{
 /* The cheese board has all cheese cell*/
 struct cell **cheese_board;
 
-/* The cheese line mean cheese cell list
+/* The cheese end line mean cheese cell list
  * that are sequentially connected. But
  * it should be end line of some cheese chunk.
  */
-struct cell **cheese_lines;
-int nr_lines;
 
-void melt_cheese_lines()
+struct cell **cheese_end_line_list;
+int nr_end_line_list;
+
+void melt_cheese_end_lines()
 {
 	int i;
 
-	for (i = 0; i < nr_lines; i++) {
-		struct cell *cheese_line = cheese_lines[i];
+	for (i = 0; i < nr_end_line_list; i++) {
+		struct cell *cheese_end_line = cheese_end_line_list[i];
 
-		while (cheese_line) {
-			cheese_line->has_cheese = false;
-			cheese_line = cheese_line->next;
+		while (cheese_end_line) {
+			cheese_end_line->has_cheese = false;
+			cheese_end_line = cheese_end_line->next;
 		}
 	}
 
-	nr_lines = 0;
+	nr_end_line_list = 0;
 	free(cheese_board);
 }
 
