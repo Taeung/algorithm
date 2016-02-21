@@ -38,10 +38,11 @@ void melt_cheese_end_lines()
 			cheese_end_line->has_cheese = false;
 			cheese_end_line = cheese_end_line->next;
 		}
+		free(cheese_end_line);
 	}
 
 	nr_end_line_list = 0;
-	free(cheese_board);
+	free(cheese_end_line_list);
 }
 
 struct cell *find_linked_cheeses(struct cell *cell)
