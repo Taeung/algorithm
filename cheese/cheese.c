@@ -16,7 +16,11 @@ struct cell{
 	struct cell *next;
 };
 
-/* The cheese board has all cheese cell*/
+
+/*
+ * The cheese board has first addresses of each row of NxN
+ * square cells to contain all cheese cells that are empty or filled.
+ */
 struct cell **cheese_board;
 
 /* The cheese end line mean cheese cell list
