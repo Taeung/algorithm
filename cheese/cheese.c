@@ -12,6 +12,8 @@
 #define MAX_WIDTH 128
 
 struct cell{
+	int row;
+	int col;
 	bool has_cheese;
 	struct cell *next;
 };
@@ -76,7 +78,7 @@ bool check_range(int col, int row)
         return true;
 }
 
-int get_values(int nr, struct cell *chse_bd_row, char *input)
+int get_values(int row, int col, struct cell *chse_bd_row, char *input)
 {
 	int i;
 	char *ptr, *arg;
@@ -87,7 +89,9 @@ int get_values(int nr, struct cell *chse_bd_row, char *input)
                 return -1;
 	}
 
-	for (i = 0; i < nr; i++) {
+	for (i = 0; i < col; i++) {
+		chse_bd_row[i].row = row;
+		chse_bd_row[i].col = i;
 		arg = strsep(&ptr, " ");
 		chse_bd_row[i].has_cheese = atoi(arg);
 		chse_bd_row[i].next = NULL;
@@ -119,7 +123,7 @@ int main(int argc, const char **argv)
 			struct cell *chse_bd_row = malloc(sizeof(struct cell) * col);
 
 			fgets(input, sizeof(input), stdin);
-			ret = get_values(col, chse_bd_row, input);
+			ret = get_values(row, col, chse_bd_row, input);
 			if (ret == -1)
 				goto err;
 			cheese_board[i] = chse_bd_row;
