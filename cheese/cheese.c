@@ -123,7 +123,7 @@ int main(int argc, const char **argv)
 			struct cell *chse_bd_row = malloc(sizeof(struct cell) * col);
 
 			fgets(input, sizeof(input), stdin);
-			ret = get_values(row, col, chse_bd_row, input);
+			ret = get_values(i, col, chse_bd_row, input);
 			if (ret == -1)
 				goto err;
 			cheese_board[i] = chse_bd_row;
