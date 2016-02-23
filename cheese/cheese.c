@@ -24,6 +24,7 @@ struct cell{
  * square cells to contain all cheese cells that are empty or filled.
  */
 struct cell **cheese_board;
+int bd_row, bd_col;
 
 /* The cheese end line mean cheese cell list
  * that are sequentially connected. But
@@ -78,7 +79,7 @@ bool check_range(int col, int row)
         return true;
 }
 
-int get_values(int row, int col, struct cell *chse_bd_row, char *input)
+int get_values(int row, struct cell *chse_bd_row, char *input)
 {
 	int i;
 	char *ptr, *arg;
@@ -89,7 +90,7 @@ int get_values(int row, int col, struct cell *chse_bd_row, char *input)
                 return -1;
 	}
 
-	for (i = 0; i < col; i++) {
+	for (i = 0; i < bd_col; i++) {
 		chse_bd_row[i].row = row;
 		chse_bd_row[i].col = i;
 		arg = strsep(&ptr, " ");
@@ -104,7 +105,7 @@ int main(int argc, const char **argv)
 {
         char input[MAX_WIDTH];
         char *ptr, *args;
-        int i, ret, col, row;
+        int i, ret;
 
         fgets(input, sizeof(input), stdin);
         ptr = strdup(input);
@@ -113,17 +114,17 @@ int main(int argc, const char **argv)
 		goto err;
         }
         args = strsep(&ptr, " ");
-        row = atoi(args);
-        col = atoi(ptr);
+        bd_row = atoi(args);
+        bd_col = atoi(ptr);
 
-        if (check_range(col, row)) {
-                cheese_board = malloc(sizeof(struct cell*) * row);
+        if (check_range(bd_col, bd_row)) {
+                cheese_board = malloc(sizeof(struct cell*) * bd_row);
 
-                for (i = 0; i < row; i++) {
-			struct cell *chse_bd_row = malloc(sizeof(struct cell) * col);
+                for (i = 0; i < bd_row; i++) {
+			struct cell *chse_bd_row = malloc(sizeof(struct cell) * bd_col);
 
 			fgets(input, sizeof(input), stdin);
-			ret = get_values(i, col, chse_bd_row, input);
+			ret = get_values(i, chse_bd_row, input);
 			if (ret == -1)
 				goto err;
 			cheese_board[i] = chse_bd_row;
