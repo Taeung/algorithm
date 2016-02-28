@@ -18,7 +18,6 @@ struct cell{
 	struct cell *next;
 };
 
-
 /*
  * The cheese board has first addresses of each row of NxN
  * square cells to contain all cheese cells that are empty or filled.
@@ -57,15 +56,131 @@ struct cell *find_linked_cheeses(struct cell *cell)
 	return cell;
 }
 
-bool is_inner(struct cell cell)
+bool contain(struct cell* chse_end_line, int row, int col)
+{
+	while (chse_end_line) {
+		if (row == chse_end_line->row &&
+		    col == chse_end_line->col)
+			return true;
+		chse_end_line = chse_end_line->next;
+	}
+
+	return false;
+}
+
+bool is_blocked_road(struct cell *cheese_end_line, struct cell *cell,
+		     int r_direct, int c_direct)
+{
+	int r = cell->row;
+	int c = cell->col;
+	int end_row = bd_row - 1;
+	int end_col = bd_col - 1;
+
+	while (true) {
+		r += r_direct;
+		c += c_direct;
+		if (r == 0 || r == end_row || c == 0 || c == end_col )
+			break;
+
+		else if (contain(cheese_end_line, r, c))
+			return true;
+	}
+
+	return false;
+}
+
+#define NR_DIRECT 8
+
+bool is_escapable(struct cell *cheese_end_line, struct cell *fugitive)
+{
+	/*
+	 * Check whether a specific cell(fugitive) can escape
+	 * from a boundary(cheese_end_line) following eight direction
+	 *
+	 */
+
+	int i;
+	bool escapable;
+	struct direct{
+		int r_direct;
+		int c_direct;
+	} direct[] = {
+		{
+			/* top */
+			.r_direct = -1,
+			.c_direct = 0
+		},
+		{
+			/* bottom */
+			.r_direct = 1,
+			.c_direct = 0
+		},
+		{
+			/* left */
+			.r_direct = 0,
+			.c_direct = -1
+		},
+		{
+			/* right */
+			.r_direct = 0,
+			.c_direct = 1
+		},
+		{
+			/* diagonally to the top left */
+			.r_direct = 1,
+			.c_direct = -1
+		},
+		{
+			/* diagonally to the bottom left */
+			.r_direct = -1,
+			.c_direct = -1
+		},
+		{
+			/* diagonally to the top right */
+			.r_direct = 1,
+			.c_direct = 1
+		},
+		{
+			/* diagonally to the bottom right */
+			.r_direct = -1,
+			.c_direct = 1
+		}
+};
+
+	for (i = 0; i < NR_DIRECT; i++) {
+		if (is_blocked_road(cheese_end_line, fugitive,
+				    direct[i].r_direct, direct[i].c_direct)) {
+			escapable = false;
+			continue;
+		} else {
+			escapable = true;
+			break;
+		}
+	}
+
+	return escapable;
+}
+
+bool is_inner(struct cell *cell)
 {
 	/* Check whether this cell is inner
 	 * each cheese end line. Even if a cell
 	 * is one of cheese end line, treat it
 	 * as inner the line.
 	 */
+	int i;
 
-	return true;
+	for (i = 0; i < nr_end_line_list; i++) {
+		struct cell *cheese_end_line = cheese_end_line_list[i];
+
+		if (contain(cheese_end_line, cell->row, cell->col))
+			return true;
+
+		if (is_escapable(cheese_end_line, cell))
+			break;
+	}
+
+	return false;
 }
 
 bool check_range(int col, int row)
