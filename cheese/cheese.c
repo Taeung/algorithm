@@ -11,7 +11,7 @@
 
 #define MAX_WIDTH 128
 
-struct cell{
+struct cell {
 	int row;
 	int col;
 	bool has_cheese;
@@ -29,7 +29,6 @@ int bd_row, bd_col;
  * that are sequentially connected. But
  * it should be end line of some cheese chunk.
  */
-
 struct cell **cheese_end_line_list;
 int nr_end_line_list;
 
@@ -101,7 +100,7 @@ bool is_escapable(struct cell *cheese_end_line, struct cell *fugitive)
 
 	int i;
 	bool escapable;
-	struct direct{
+	struct direct {
 		int r_direct;
 		int c_direct;
 	} direct[] = {
@@ -145,7 +144,7 @@ bool is_escapable(struct cell *cheese_end_line, struct cell *fugitive)
 			.r_direct = -1,
 			.c_direct = 1
 		}
-};
+	};
 
 	for (i = 0; i < NR_DIRECT; i++) {
 		if (is_blocked_road(cheese_end_line, fugitive,
