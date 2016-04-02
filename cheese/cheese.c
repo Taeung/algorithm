@@ -182,6 +182,21 @@ bool is_inner(struct cell *cell)
 	return false;
 }
 
+int count_cheeses()
+{
+	int i, j;
+	int nr_cheese = 0;
+
+	for (i = 0; i < bd_row; i++) {
+		for (j = 0; j < bd_col; j++) {
+			if (cheese_board[i][j].has_cheese)
+				nr_cheese++;
+		}
+	}
+
+	return nr_cheese;
+}
+
 bool check_range(int col, int row)
 {
         if (col < 3 || col > 100)
