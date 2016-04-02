@@ -215,6 +215,14 @@ int get_values(int row, struct cell *chse_bd_row, char *input)
 	return 0;
 }
 
+void free_cheese_board()
+{
+	int i;
+
+	for (i = 0; i < bd_row; i++)
+		free(cheese_board[i]);
+}
+
 int main(int argc, const char **argv)
 {
         char input[MAX_WIDTH];
@@ -248,5 +256,6 @@ int main(int argc, const char **argv)
 	return 0;
 
 err:
+	free_cheese_board();
 	return -1;
 }
