@@ -197,6 +197,18 @@ int count_cheeses()
 	return nr_cheese;
 }
 
+/**
+ * struct result - the result of the cheese problem.
+ *
+ * @nr_cheeses: the number of remaining cheeses at one hour
+ *              before all cheeses are melted
+ * @hour: run time until all cheeses are melted
+ */
+struct result {
+	int nr_cheeses;
+	int hour;
+};
+
 bool check_range(int col, int row)
 {
         if (col < 3 || col > 100)
