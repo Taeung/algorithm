@@ -209,6 +209,30 @@ struct result {
 	int hour;
 };
 
+/* This function contains the logic that automatically
+ * melt the end line of cheeses per one hour.
+ */
+struct result scan_cheese_board()
+{
+	int i, j;
+	int bef_nr, nr_cheeses = count_cheeses();
+	struct result ret;
+
+	if (nr_cheeses == 0)
+		return ret;
+
+	do {
+		for (i = 0; i < bd_row; i++) {
+			for (j = 0; j < bd_col; j++)
+				find_linked_cheeses(&cheese_board[i][j]);
+		}
+		bef_nr = nr_cheeses;
+		melt_cheese_end_lines();
+		nr_cheeses = count_cheeses();
+	} while (ret.nr_cheeses != 0);
+	return ret;
+}
+
 bool check_range(int col, int row)
 {
         if (col < 3 || col > 100)
@@ -255,6 +279,7 @@ int main(int argc, const char **argv)
         char input[MAX_WIDTH];
         char *ptr, *args;
         int i, ret;
+	struct result output_fmt;
 
         fgets(input, sizeof(input), stdin);
         ptr = strdup(input);
@@ -279,7 +304,8 @@ int main(int argc, const char **argv)
 			cheese_board[i] = chse_bd_row;
                 }
         }
-
+	output_fmt = scan_cheese_board();
+	printf("%d\n%d", output_fmt.hour, output_fmt.nr_cheeses);
 	return 0;
 
 err:
