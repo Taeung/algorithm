@@ -160,23 +160,27 @@ bool is_escapable(struct cell *cheese_end_line, struct cell *fugitive)
 	return escapable;
 }
 
-bool is_inner(struct cell *cell)
+bool is_inner_end_line(struct cell *cell, struct cell *cheese_end_line)
 {
 	/* Check whether this cell is inner
-	 * each cheese end line. Even if a cell
-	 * is one of cheese end line, treat it
+	 * a cheese end line. Even if a cell
+	 * is one of a cheese end line, treat it
 	 * as inner the line.
 	 */
+	if (contain(cheese_end_line, cell->row, cell->col))
+		return true;
+
+	if (is_escapable(cheese_end_line, cell))
+		return false;
+}
+
+bool is_inner(struct cell *cell)
+{
 	int i;
 
 	for (i = 0; i < nr_end_line_list; i++) {
-		struct cell *cheese_end_line = cheese_end_line_list[i];
-
-		if (contain(cheese_end_line, cell->row, cell->col))
+		if (is_inner_end_line(cell, cheese_end_line_list[i]))
 			return true;
-
-		if (is_escapable(cheese_end_line, cell))
-			break;
 	}
 
 	return false;
