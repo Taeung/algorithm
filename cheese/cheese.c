@@ -50,11 +50,6 @@ void melt_cheese_end_lines()
 	free(cheese_end_line_list);
 }
 
-struct cell *find_linked_cheeses(struct cell *cell)
-{
-	return cell;
-}
-
 bool contain(struct cell* chse_end_line, int row, int col)
 {
 	while (chse_end_line) {
@@ -200,6 +195,18 @@ int count_cheeses()
 
 	return nr_cheese;
 }
+
+struct cell *collect_end_line(struct cell *cell)
+{
+	if (!cell->has_cheese)
+		return NULL;
+
+	if (is_inner(cell))
+		return NULL;
+
+	return cell;
+}
+
 
 /**
  * struct result - the result of the cheese problem.
