@@ -1,5 +1,5 @@
 /*
- * Cheese problem
+ * Cheese problem (old version, incomplete)
  *
  * Copyright (C) 2016, Taeung Song <treeze.taeung@gmail.com>
  *
