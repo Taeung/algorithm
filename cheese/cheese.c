@@ -49,9 +49,27 @@ out:
 	return range;
 }
 
+bool check_range(int row, int col)
+{
+        if (col < 3 || col > 100)
+                return false;
+
+        if (row < 3 || row > 100)
+                return false;
+
+        return true;
+}
+
 int main(int argc, const char **argv)
 {
 	struct range range = get_range();
+
+	if (check_range(range.row, range.col)) {
+		/* fall-through */
+	} else {
+		printf("Error: wrong range of input\n");
+		return -1;
+	}
 
 	return 0;
 }
