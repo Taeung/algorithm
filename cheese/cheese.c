@@ -11,9 +11,9 @@
 
 #define MAX_WIDTH 128
 
-struct cheese_cell {
+struct cell {
 	bool has_cheese;
-	struct cheese_cell *up,
+	struct cell *up,
 		*down,
 		*left,
 		*right;
@@ -21,7 +21,7 @@ struct cheese_cell {
 
 struct cheese_board {
 	int row, col;
-	struct cheese_cell **board;
+	struct cell **board;
 };
 
 struct range {
@@ -47,7 +47,7 @@ void cheese_board__init(struct cheese_board *cheese_board, int row, int col)
 	cheese_board->row = row;
 	cheese_board->col = col;
 	for (i = 0; i < row; i++) {
-		struct cheese_cell *cheese_line = malloc(sizeof(struct cheese_cell) * col);
+		struct cell *cheese_line = malloc(sizeof(struct cell) * col);
 
 		fgets(input, sizeof(input), stdin);
 		ptr = strdup(input);
@@ -69,7 +69,7 @@ struct cheese_board *cheese_board__new(int row, int col)
 {
 	struct cheese_board *cheese_board = malloc(sizeof(*cheese_board));
 
-	cheese_board->board = malloc(sizeof(struct cheese_cell *) * row);
+	cheese_board->board = malloc(sizeof(struct cell *) * row);
 	cheese_board__init(cheese_board, row, col);
 	return cheese_board;
 }
