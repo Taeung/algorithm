@@ -50,7 +50,7 @@ void cheese_board__delete(struct cheese_board *cheese_board)
 	free(cheese_board);
 }
 
-void cheese_board__init(struct cheese_board *cheese_board, int row, int col)
+int cheese_board__init(struct cheese_board *cheese_board, int row, int col)
 {
 	int i, j;
 	char input[MAX_WIDTH], *ptr, *arg;
@@ -64,7 +64,7 @@ void cheese_board__init(struct cheese_board *cheese_board, int row, int col)
 		ptr = strdup(input);
 		if (!ptr) {
 			printf("%s: strdup failed\n", __func__);
-			cheese_board__delete(cheese_board);
+			return -1;
 		}
 
 		for (j = 0; j < col; j++) {
@@ -75,6 +75,7 @@ void cheese_board__init(struct cheese_board *cheese_board, int row, int col)
 
 		cheese_board->board[i] = cheese_line;
 	}
+	return 0;
 }
 
 struct cheese_board *cheese_board__new(int row, int col)
@@ -82,7 +83,10 @@ struct cheese_board *cheese_board__new(int row, int col)
 	struct cheese_board *cheese_board = malloc(sizeof(*cheese_board));
 
 	cheese_board->board = malloc(sizeof(struct cell *) * row);
-	cheese_board__init(cheese_board, row, col);
+	if (cheese_board__init(cheese_board, row, col) < 0) {
+		cheese_board__delete(cheese_board);
+		return NULL;
+	}
 	return cheese_board;
 }
 
