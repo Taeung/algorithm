@@ -52,21 +52,19 @@ void cheese_board__delete(struct cheese_board *cheese_board)
 
 struct cell *cheese_line__new(int size)
 {
-	int i;
-	char input[MAX_WIDTH], *ptr, *arg;
+	int i, index = 0;
+	char input[MAX_WIDTH];
 	struct cell *cheese_line = malloc(sizeof(struct cell) * size);
 
 	fgets(input, sizeof(input), stdin);
-	ptr = strdup(input);
-	if (!ptr) {
-		printf("%s: strdup failed\n", __func__);
-		return NULL;
-	}
 
-	for (i = 0; i < size; i++) {
-		arg = strsep(&ptr, " ");
-		if (atoi(arg) == 1)
-			cheese_line[i].status = HAS_CHEESE;
+	for (i = 0; i < MAX_WIDTH; i++) {
+		if (input[i] == '0')
+			cheese_line[index++].status = AIR;
+		if (input[i] == '1')
+			cheese_line[index++].status = HAS_CHEESE;
+		if (index == size)
+			break;
 	}
 	return cheese_line;
 }
