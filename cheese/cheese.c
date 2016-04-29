@@ -12,6 +12,12 @@
 #define MAX_WIDTH 128
 #define MAX_DIRECT 4
 
+enum status {
+	AIR,
+	HAS_CHEESE,
+	MELTING_CHEESE
+};
+
 enum direct {
 	TOP,
 	BOTTOM,
@@ -20,7 +26,7 @@ enum direct {
 };
 
 struct cell {
-	bool has_cheese;
+	enum status status;
 	struct cell *direct[MAX_DIRECT];
 };
 
@@ -63,7 +69,8 @@ void cheese_board__init(struct cheese_board *cheese_board, int row, int col)
 
 		for (j = 0; j < col; j++) {
 			arg = strsep(&ptr, " ");
-			cheese_line[j].has_cheese = atoi(arg);
+			if (atoi(arg) == 1)
+				cheese_line[j].status = HAS_CHEESE;
 		}
 
 		cheese_board->board[i] = cheese_line;
