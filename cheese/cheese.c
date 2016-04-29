@@ -10,13 +10,18 @@
 #include <stdbool.h>
 
 #define MAX_WIDTH 128
+#define MAX_DIRECT 4
+
+enum direct {
+	TOP,
+	BOTTOM,
+	LEFT,
+	RIGHT
+};
 
 struct cell {
 	bool has_cheese;
-	struct cell *up,
-		*down,
-		*left,
-		*right;
+	struct cell *direct[MAX_DIRECT];
 };
 
 struct cheese_board {
