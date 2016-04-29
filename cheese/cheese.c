@@ -50,29 +50,38 @@ void cheese_board__delete(struct cheese_board *cheese_board)
 	free(cheese_board);
 }
 
+struct cell *cheese_line__new(int size)
+{
+	int i;
+	char input[MAX_WIDTH], *ptr, *arg;
+	struct cell *cheese_line = malloc(sizeof(struct cell) * size);
+
+	fgets(input, sizeof(input), stdin);
+	ptr = strdup(input);
+	if (!ptr) {
+		printf("%s: strdup failed\n", __func__);
+		return NULL;
+	}
+
+	for (i = 0; i < size; i++) {
+		arg = strsep(&ptr, " ");
+		if (atoi(arg) == 1)
+			cheese_line[i].status = HAS_CHEESE;
+	}
+	return cheese_line;
+}
+
 int cheese_board__init(struct cheese_board *cheese_board, int row, int col)
 {
-	int i, j;
-	char input[MAX_WIDTH], *ptr, *arg;
+	int i;
 
 	cheese_board->row = row;
 	cheese_board->col = col;
 	for (i = 0; i < row; i++) {
-		struct cell *cheese_line = malloc(sizeof(struct cell) * col);
+		struct cell *cheese_line = cheese_line__new(col);
 
-		fgets(input, sizeof(input), stdin);
-		ptr = strdup(input);
-		if (!ptr) {
-			printf("%s: strdup failed\n", __func__);
+		if (!cheese_line)
 			return -1;
-		}
-
-		for (j = 0; j < col; j++) {
-			arg = strsep(&ptr, " ");
-			if (atoi(arg) == 1)
-				cheese_line[j].status = HAS_CHEESE;
-		}
-
 		cheese_board->board[i] = cheese_line;
 	}
 	return 0;
