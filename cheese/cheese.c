@@ -50,6 +50,29 @@ void cheese_board__delete(struct cheese_board *cheese_board)
 	free(cheese_board);
 }
 
+struct cell *get_cell(struct cheese_board *cheese_board, int row, int col)
+{
+	if (col < 0 || col >= cheese_board->col)
+                return NULL;
+
+        if (row < 0 || row >= cheese_board->row)
+                return NULL;
+
+        return &cheese_board->board[row][col];
+}
+
+#define SET_DIRECT(_direct, _row, _col)					\
+	cell->direct[_direct] = get_cell(cheese_board, _row, _col)	\
+
+void cell_init(struct cheese_board *cheese_board,
+		       struct cell *cell, int row, int col)
+{
+	SET_DIRECT(TOP, row-1, col);
+	SET_DIRECT(BOTTOM, row+1, col);
+	SET_DIRECT(LEFT, row, col-1);
+	SET_DIRECT(RIGHT, row, col+1);
+}
+
 struct cell *cheese_line__new(int size)
 {
 	int i, index = 0;
@@ -71,7 +94,7 @@ struct cell *cheese_line__new(int size)
 
 int cheese_board__init(struct cheese_board *cheese_board, int row, int col)
 {
-	int i;
+	int i, j;
 
 	cheese_board->row = row;
 	cheese_board->col = col;
@@ -81,6 +104,15 @@ int cheese_board__init(struct cheese_board *cheese_board, int row, int col)
 		if (!cheese_line)
 			return -1;
 		cheese_board->board[i] = cheese_line;
+	}
+
+	/* Initialize each cell for info about contiguous cell */
+	for (i = 0; i < row; i++) {
+		for (j = 0; j < col; j++) {
+			struct cell *cell = &cheese_board->board[i][j];
+
+			cell_init(cheese_board, cell, i, j);
+		}
 	}
 	return 0;
 }
