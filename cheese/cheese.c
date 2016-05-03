@@ -40,6 +40,21 @@ struct range {
 	int col;
 };
 
+int count_remaining_cheeses(struct cheese_board *cheese_board)
+{
+	int i, j, remaining_cheeses = 0;
+
+	for (i = 0; i < cheese_board->row; i++) {
+		for (j = 0; j < cheese_board->col; j++) {
+			struct cell *cell = &cheese_board->board[i][j];
+
+			if (cell->status == HAS_CHEESE)
+				remaining_cheeses++;
+		}
+	}
+	return remaining_cheeses;
+}
+
 void cheese_board__delete(struct cheese_board *cheese_board)
 {
 	int i;
