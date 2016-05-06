@@ -41,6 +41,18 @@ struct range {
 	int col;
 };
 
+void show_board(struct cheese_board *cheese_board)
+{
+	int i, j;
+
+	for (i = 0; i < cheese_board->row; i++) {
+		for (j = 0; j < cheese_board->col; j++) {
+			printf("%d", cheese_board->board[i][j].status);
+		}
+		printf("\n");
+	}
+}
+
 void melt_cheeses(struct cheese_board *cheese_board)
 {
 	int i, j;
