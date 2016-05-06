@@ -195,7 +195,7 @@ void cell_init(struct cheese_board *cheese_board,
 struct cell *cheese_line__new(int size)
 {
 	int i, index = 0;
-	char input[MAX_WIDTH];
+	char input[MAX_WIDTH] = {0};
 	struct cell *cheese_line = malloc(sizeof(struct cell) * size);
 
 	fgets(input, sizeof(input), stdin);
