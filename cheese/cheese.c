@@ -269,6 +269,7 @@ bool check_range(int row, int col)
 
 int main(int argc, const char **argv)
 {
+	int nr_cheeses, time_taken = 0, remaining_cheeses = -1;
 	struct cheese_board *cheese_board;
 	struct range range = get_range();
 
@@ -282,6 +283,18 @@ int main(int argc, const char **argv)
 		printf("Error: wrong range of input\n");
 		return -1;
 	}
+
+	while (true) {
+		nr_cheeses = remaining_cheeses;
+		remaining_cheeses = count_remaining_cheeses(cheese_board);
+		if (remaining_cheeses == 0)
+			break;
+		check_board(cheese_board);
+		melt_cheeses(cheese_board);
+		time_taken++;
+	}
+
+	printf("%d\n%d", time_taken, nr_cheeses);
 
 	cheese_board__delete(cheese_board);
 	return 0;
