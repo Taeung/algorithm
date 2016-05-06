@@ -37,20 +37,20 @@ test_script.write(str(nr_row) + " " + str(nr_col) + "\\n\\\n")
 def write_zero_line(nr_col):
     row = ""
     for i in range(0, nr_col):
-        row += "0"
+        row += "0 "
     test_script.write(row)
 
-write_zero_line(nr_col)
-test_script.write("\\n\\\n")
+write_zero_line(nr_col-1)
+test_script.write("0\\n\\\n")
 nr_inner_row = nr_row - 2
 nr_inner_col = nr_col - 2
 
 for i in range(0, nr_inner_row):
-    test_script.write("0")
+    test_script.write("0 ")
     for i in range(0, nr_inner_col):
         cheese_cell = random.randrange(0, 2)
-        test_script.write(str(cheese_cell))
+        test_script.write(str(cheese_cell) + " ")
     test_script.write("0\\n\\\n")
 
-write_zero_line(nr_col)
-test_script.write("\\n\" | ./$1")
+write_zero_line(nr_col-1)
+test_script.write("0\\n\" | ./$1")
