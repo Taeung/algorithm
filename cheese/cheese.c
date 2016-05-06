@@ -28,6 +28,7 @@ enum direct {
 struct cell {
 	enum status status;
 	struct cell *direct[MAX_DIRECT];
+	bool in_endline;
 };
 
 struct cheese_board {
@@ -82,6 +83,10 @@ struct cell *get_cell(struct cheese_board *cheese_board, int row, int col)
 void cell_init(struct cheese_board *cheese_board,
 		       struct cell *cell, int row, int col)
 {
+	if (row == 0 || col == 0 ||
+	    row == cheese_board->row-1 || col == cheese_board->col-1)
+		cell->in_endline = true;
+
 	SET_DIRECT(TOP, row-1, col);
 	SET_DIRECT(BOTTOM, row+1, col);
 	SET_DIRECT(LEFT, row, col-1);
