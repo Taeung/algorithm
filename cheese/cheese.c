@@ -41,6 +41,20 @@ struct range {
 	int col;
 };
 
+void melt_cheeses(struct cheese_board *cheese_board)
+{
+	int i, j;
+
+	for (i = 0; i < cheese_board->row; i++) {
+		for (j = 0; j < cheese_board->col; j++) {
+			struct cell *cell = &cheese_board->board[i][j];
+
+			if (cell->status == MELTING_CHEESE)
+				cell->status = AIR;
+		}
+	}
+}
+
 bool is_checked_air_cell(struct cell *air_cell,
 			 struct cell **checked_air_cells)
 {
