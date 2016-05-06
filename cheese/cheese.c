@@ -41,6 +41,79 @@ struct range {
 	int col;
 };
 
+bool is_checked_air_cell(struct cell *air_cell,
+			 struct cell **checked_air_cells)
+{
+	int i;
+
+	for (i = 0; checked_air_cells[i] != NULL; i++) {
+		if (checked_air_cells[i] == air_cell)
+			return true;
+	}
+	return false;
+}
+
+bool is_ventilated(struct cell *air_cell,
+		   struct cell **checked_air_cells)
+{
+	/*
+	 * Following adjoined air cells, if the first air cell
+	 * can be linked with a cell of endline, it is ventilated.
+	 */
+	int i = 0;
+
+	while (checked_air_cells[i] != NULL)
+		i++;
+	checked_air_cells[i] = air_cell;
+	checked_air_cells[++i] = NULL;
+
+	if (air_cell->in_endline) {
+		return true;
+	}
+
+	for (i = 0; i < MAX_DIRECT; i++) {
+		if (air_cell->direct[i]->status == AIR &&
+		    !is_checked_air_cell(air_cell->direct[i], checked_air_cells) &&
+		    is_ventilated(air_cell->direct[i], checked_air_cells))
+			return true;
+	}
+	return false;
+}
+
+void check_cheese_cell(struct cell *cheese_cell, int max_cells)
+{
+	int i;
+	struct cell **checked_air_cells;
+
+	checked_air_cells = malloc(sizeof(struct cell *) * max_cells);
+
+	for (i = 0; i < MAX_DIRECT; i++) {
+		if (cheese_cell->direct[i]->status == AIR) {
+			checked_air_cells[0] = NULL;
+			if (is_ventilated(cheese_cell->direct[i], checked_air_cells)) {
+				cheese_cell->status = MELTING_CHEESE;
+				break;
+			}
+		}
+	}
+	free(checked_air_cells);
+}
+
+void check_board(struct cheese_board *cheese_board)
+{
+	int i, j;
+	int max_cells = cheese_board->row * cheese_board->col;
+
+	for (i = 0; i < cheese_board->row; i++) {
+		for (j = 0; j < cheese_board->col; j++) {
+			struct cell *cell = &cheese_board->board[i][j];
+
+			if (cell->status == HAS_CHEESE)
+				check_cheese_cell(cell, max_cells);
+		}
+	}
+}
+
 int count_remaining_cheeses(struct cheese_board *cheese_board)
 {
 	int i, j, remaining_cheeses = 0;
