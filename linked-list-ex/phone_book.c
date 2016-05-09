@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
 struct phone_node {
 	char name[1024];
@@ -32,6 +33,14 @@ struct phone_node *search(struct phone_node **head, char *name)
 	return NULL;
 }
 
+void print_bar(bool newline)
+{
+	if (newline)
+		printf("\n\t===============================\n");
+	else
+		printf("\t===============================\n");
+}
+
 void display(struct phone_node **head)
 {
 	struct phone_node *current_node;
@@ -44,12 +53,12 @@ void display(struct phone_node **head)
 	current_node = *head;
 
 	while (current_node != NULL) {
-		printf("\n\t===============================\n");
+		print_bar(true);
 		printf("\tName : %s \n", current_node->name);
 		printf("\tPhone number : %s \n", current_node->phone_number);
 		current_node = current_node->next;
 	}
-	printf("\n\t===============================\n");
+	print_bar(true);
 }
 
 void insert(struct phone_node **head)
@@ -89,10 +98,10 @@ void insert(struct phone_node **head)
 		current_node->next->next = NULL;
 	}
 
-	printf("\n\t===============================\n");
+	print_bar(true);
 	printf("\tName : %s \n", name);
 	printf("\tPhone number : %s \n", phone_number);
-	printf("\t===============================\n");
+	print_bar(false);
 }
 
 void update(struct phone_node **head)
