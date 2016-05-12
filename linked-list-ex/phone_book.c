@@ -61,27 +61,44 @@ void display(struct phone_node **head)
 	print_bar(true);
 }
 
-void insert(struct phone_node **head)
+struct phone_node *create_contact(struct phone_node **head)
 {
-	struct phone_node *current_node;
 	char phone_number[1024] = {0};
 	char name[1024] = {0};
+	struct phone_node *contact;
 
 	printf("\tPlease enter a name : ");
 	scanf("%s", name);
-
 	if (search(head, name) != NULL) {
 		printf("\tThere is already this name : %s \n", name);
-		return;
+		return NULL;
 	}
+
+	printf("\tPlease enter a phone number : ");
+	scanf("%s", phone_number);
+	contact = (struct phone_node *)malloc(sizeof(struct phone_node));
+	strcpy(contact->name, name);
+	strcpy(contact->phone_number, phone_number);
+
+	print_bar(true);
+	printf("\tName : %s \n", name);
+	printf("\tPhone number : %s \n", phone_number);
+	print_bar(false);
+
+	return contact;
+}
+
+void insert(struct phone_node **head)
+{
+	struct phone_node *current_node;
+	struct phone_node *new_node = create_contact(head);
+
+	if (new_node == NULL)
+		return;
 
 	if (*head == NULL) {
 		/* first */
-		*head = (struct phone_node *)malloc(sizeof(struct phone_node));
-		strcpy((*head)->name, name);
-		printf("\tPlease enter a phone number : ");
-		scanf("%s", phone_number);
-		strcpy((*head)->phone_number, phone_number);
+		*head = new_node;
 		(*head)->next = NULL;
 	} else {
 		current_node = *head;
@@ -89,19 +106,9 @@ void insert(struct phone_node **head)
 			current_node = current_node->next;
 		}
 
-		current_node->next = (struct phone_node *)malloc(sizeof(struct phone_node));
-
-		strcpy(current_node->next->name, name);
-		printf("\tPlease enter a phone number : ");
-		scanf("%s", phone_number);
-		strcpy(current_node->next->phone_number, phone_number);
+		current_node->next = new_node;
 		current_node->next->next = NULL;
 	}
-
-	print_bar(true);
-	printf("\tName : %s \n", name);
-	printf("\tPhone number : %s \n", phone_number);
-	print_bar(false);
 }
 
 void update(struct phone_node **head)
