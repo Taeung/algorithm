@@ -41,6 +41,12 @@ void print_bar(bool newline)
 		printf("\t===============================\n");
 }
 
+void show_contact_info(struct phone_node *node)
+{
+	printf("\tName : %s \n", node->name);
+	printf("\tPhone number : %s \n", node->phone_number);
+}
+
 void display(struct phone_node **head)
 {
 	struct phone_node *current_node;
@@ -52,13 +58,12 @@ void display(struct phone_node **head)
 
 	current_node = *head;
 
-	while (current_node != NULL) {
-		print_bar(true);
-		printf("\tName : %s \n", current_node->name);
-		printf("\tPhone number : %s \n", current_node->phone_number);
-		current_node = current_node->next;
-	}
 	print_bar(true);
+	while (current_node != NULL) {
+		show_contact_info(current_node);
+		current_node = current_node->next;
+		print_bar(false);
+	}
 }
 
 struct phone_node *create_contact(struct phone_node **head)
@@ -81,8 +86,7 @@ struct phone_node *create_contact(struct phone_node **head)
 	strcpy(contact->phone_number, phone_number);
 
 	print_bar(true);
-	printf("\tName : %s \n", name);
-	printf("\tPhone number : %s \n", phone_number);
+	show_contact_info(contact);
 	print_bar(false);
 
 	return contact;
