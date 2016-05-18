@@ -41,10 +41,10 @@ void print_bar(bool newline)
 		printf("\t===============================\n");
 }
 
-void show_contact_info(struct phone_node *node)
+void show_contact_info(struct phone_node *contact_info)
 {
-	printf("\tName : %s \n", node->name);
-	printf("\tPhone number : %s \n", node->phone_number);
+	printf("\tName : %s \n", contact_info->name);
+	printf("\tPhone number : %s \n", contact_info->phone_number);
 }
 
 void display(struct phone_node **head)
