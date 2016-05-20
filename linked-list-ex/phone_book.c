@@ -75,10 +75,19 @@ const char *get_name_from_user(void)
 	return name;
 }
 
+const char *get_phone_number_from_user(void)
+{
+	static char phone_number[1024] = {0};
+
+	printf("\tPlease enter a phone number : ");
+	scanf("%s", phone_number);
+	return phone_number;
+}
+
 struct phone_node *create_contact(struct phone_node **head)
 {
-	char phone_number[1024] = {0};
 	const char *name = get_name_from_user();
+	const char *phone_number = get_phone_number_from_user();
 	struct phone_node *contact;
 
 	if (search(head, name) != NULL) {
@@ -86,8 +95,6 @@ struct phone_node *create_contact(struct phone_node **head)
 		return NULL;
 	}
 
-	printf("\tPlease enter a phone number : ");
-	scanf("%s", phone_number);
 	contact = (struct phone_node *)malloc(sizeof(struct phone_node));
 	strcpy(contact->name, name);
 	strcpy(contact->phone_number, phone_number);
@@ -125,7 +132,7 @@ void insert(struct phone_node **head)
 void update(struct phone_node **head)
 {
 	struct phone_node *current_node;
-	char phone_number[1024] = {0};
+	const char *phone_number;
 	const char *name = get_name_from_user();
 
 	current_node = search(head, name);
@@ -133,8 +140,7 @@ void update(struct phone_node **head)
 		printf("\tThere is not this name : %s \n", name);
 		return;
 	} else {
-		printf("\tPlease enter new phone number : ");
-		scanf("%s", phone_number);
+		phone_number = get_phone_number_from_user();
 		strcpy(current_node->phone_number, phone_number);
 	}
 }
