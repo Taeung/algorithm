@@ -16,7 +16,7 @@ struct phone_node {
 	struct phone_node *next;
 };
 
-struct phone_node *search(struct phone_node **head, char *name)
+struct phone_node *search(struct phone_node **head, const char *name)
 {
 	struct phone_node *current_node;
 
