@@ -66,14 +66,21 @@ void display(struct phone_node **head)
 	}
 }
 
-struct phone_node *create_contact(struct phone_node **head)
+const char *get_name_from_user(void)
 {
-	char phone_number[1024] = {0};
-	char name[1024] = {0};
-	struct phone_node *contact;
+	static char name[1024] = {0};
 
 	printf("\tPlease enter a name : ");
 	scanf("%s", name);
+	return name;
+}
+
+struct phone_node *create_contact(struct phone_node **head)
+{
+	char phone_number[1024] = {0};
+	const char *name = get_name_from_user();
+	struct phone_node *contact;
+
 	if (search(head, name) != NULL) {
 		printf("\tThere is already this name : %s \n", name);
 		return NULL;
@@ -119,10 +126,8 @@ void update(struct phone_node **head)
 {
 	struct phone_node *current_node;
 	char phone_number[1024] = {0};
-	char name[1024] = {0};
+	const char *name = get_name_from_user();
 
-	printf("\tPlease enter a name : ");
-	scanf("%s", name);
 	current_node = search(head, name);
 	if (current_node == NULL) {
 		printf("\tThere is not this name : %s \n", name);
@@ -138,10 +143,8 @@ void delete(struct phone_node **head)
 {
 	struct phone_node *current_node;
 	struct phone_node *before_node;
-	char name[1024] = {0};
+	const char *name = get_name_from_user();
 
-	printf("\tPlease enter a name : ");
-	scanf("%s", name);
 	current_node = search(head, name);
 
 	if (current_node == NULL) {
