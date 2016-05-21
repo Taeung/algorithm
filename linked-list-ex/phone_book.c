@@ -214,7 +214,8 @@ int menu(void)
 
 int main(int argc, const char  *argv[])
 {
-	struct phone_node *head = NULL;
+	/* head node for contacts list */
+	struct phone_node *contacts = NULL;
 	int menu_num;
 	char end;
 
@@ -223,16 +224,16 @@ int main(int argc, const char  *argv[])
 		menu_num = menu();
 		switch (menu_num) {
 		case 1:
-			insert(&head);
+			insert(&contacts);
 			break;
 		case 2:
-			delete(&head);
+			delete(&contacts);
 			break;
 		case 3:
-			update(&head);
+			update(&contacts);
 			break;
 		case 4:
-			display(&head);
+			display(&contacts);
 			break;
 		case 5:
 			printf("\n\n\t Good bye !! \n\n");
