@@ -10,15 +10,15 @@
 #include <string.h>
 #include <stdbool.h>
 
-struct phone_node {
+struct contact_info {
 	char name[1024];
 	char phone_number[1024];
-	struct phone_node *next;
+	struct contact_info *next;
 };
 
-struct phone_node *search(struct phone_node **head, const char *name)
+struct contact_info *search(struct contact_info **head, const char *name)
 {
-	struct phone_node *current_node;
+	struct contact_info *current_node;
 
 	if (*head == NULL)
 		return NULL;
@@ -41,15 +41,15 @@ void print_bar(bool newline)
 		printf("\t===============================\n");
 }
 
-void show_contact_info(struct phone_node *contact_info)
+void show_contact_info(struct contact_info *contact_info)
 {
 	printf("\tName : %s \n", contact_info->name);
 	printf("\tPhone number : %s \n", contact_info->phone_number);
 }
 
-void display(struct phone_node **head)
+void display(struct contact_info **head)
 {
-	struct phone_node *current_node;
+	struct contact_info *current_node;
 
 	if (*head == NULL) {
 		printf("\tThere is nothing. \n");
@@ -84,18 +84,18 @@ const char *get_phone_number_from_user(void)
 	return phone_number;
 }
 
-struct phone_node *create_contact(struct phone_node **head)
+struct contact_info *create_contact(struct contact_info **head)
 {
 	const char *name = get_name_from_user();
 	const char *phone_number = get_phone_number_from_user();
-	struct phone_node *contact;
+	struct contact_info *contact;
 
 	if (search(head, name) != NULL) {
 		printf("\tThere is already this name : %s \n", name);
 		return NULL;
 	}
 
-	contact = (struct phone_node *)malloc(sizeof(struct phone_node));
+	contact = (struct contact_info *)malloc(sizeof(struct contact_info));
 	strcpy(contact->name, name);
 	strcpy(contact->phone_number, phone_number);
 
@@ -106,10 +106,10 @@ struct phone_node *create_contact(struct phone_node **head)
 	return contact;
 }
 
-void insert(struct phone_node **head)
+void insert(struct contact_info **head)
 {
-	struct phone_node *current_node;
-	struct phone_node *new_node = create_contact(head);
+	struct contact_info *current_node;
+	struct contact_info *new_node = create_contact(head);
 
 	if (new_node == NULL)
 		return;
@@ -129,9 +129,9 @@ void insert(struct phone_node **head)
 	}
 }
 
-void update(struct phone_node **head)
+void update(struct contact_info **head)
 {
-	struct phone_node *current_node;
+	struct contact_info *current_node;
 	const char *phone_number;
 	const char *name = get_name_from_user();
 
@@ -145,10 +145,10 @@ void update(struct phone_node **head)
 	}
 }
 
-void delete(struct phone_node **head)
+void delete(struct contact_info **head)
 {
-	struct phone_node *current_node;
-	struct phone_node *before_node;
+	struct contact_info *current_node;
+	struct contact_info *before_node;
 	const char *name = get_name_from_user();
 
 	current_node = search(head, name);
@@ -215,7 +215,7 @@ int menu(void)
 int main(int argc, const char  *argv[])
 {
 	/* head node for contacts list */
-	struct phone_node *contacts = NULL;
+	struct contact_info *contacts = NULL;
 	int menu_num;
 	char end;
 
