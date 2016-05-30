@@ -212,6 +212,25 @@ int menu(void)
 	return menu;
 }
 
+void finish(struct contact_info **head)
+{
+	struct contact_info *current_node;
+
+	if (*head == NULL) {
+		printf("\tThere is nothing. \n");
+		return;
+	}
+
+	current_node = *head;
+
+	while (current_node != NULL) {
+		struct contact_info *next = current_node->next;
+
+		free(current_node);
+		current_node = next;
+	}
+}
+
 int main(int argc, const char  *argv[])
 {
 	/* head node for contacts list */
@@ -245,5 +264,6 @@ int main(int argc, const char  *argv[])
 		scanf("%c%c", &end, &end);
 	} while (menu_num != 5);
 
+	finish(&contacts);
 	return 0;
 }
