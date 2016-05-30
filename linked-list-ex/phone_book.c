@@ -97,7 +97,18 @@ struct contact_info *create_contact(struct contact_info **head)
 
 	contact = (struct contact_info *)malloc(sizeof(struct contact_info));
 	contact->name = strdup(name);
+	if (!contact->name) {
+		printf("%s: strdup failed\n", __func__);
+		free(contact);
+		return NULL;
+	}
+
 	contact->phone_number = strdup(phone_number);
+	if (!contact->phone_number) {
+		printf("%s: strdup failed\n", __func__);
+		free(contact);
+		return NULL;
+	}
 
 	print_bar(true);
 	show_contact_info(contact);
