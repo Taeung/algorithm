@@ -11,8 +11,8 @@
 #include <stdbool.h>
 
 struct contact_info {
-	char name[1024];
-	char phone_number[1024];
+	char *name;
+	char *phone_number;
 	struct contact_info *next;
 };
 
@@ -96,8 +96,8 @@ struct contact_info *create_contact(struct contact_info **head)
 	}
 
 	contact = (struct contact_info *)malloc(sizeof(struct contact_info));
-	strcpy(contact->name, name);
-	strcpy(contact->phone_number, phone_number);
+	contact->name = strdup(name);
+	contact->phone_number = strdup(phone_number);
 
 	print_bar(true);
 	show_contact_info(contact);
