@@ -226,6 +226,8 @@ void finish(struct contact_info **head)
 	while (current_node != NULL) {
 		struct contact_info *next = current_node->next;
 
+		free(current_node->name);
+		free(current_node->phone_number);
 		free(current_node);
 		current_node = next;
 	}
