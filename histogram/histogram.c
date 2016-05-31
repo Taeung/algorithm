@@ -11,7 +11,7 @@
 #define MAX_INPUT 1048576
 
 struct hist_block {
-	unsigned int size;
+	unsigned int height;
 } *histogram;
 
 unsigned int nr_block;
@@ -41,10 +41,10 @@ int get_values_from(char *input)
 	end = nr - 1;
 	for (i = 0; i < end; i++) {
 		arg = strsep(&ptr, " ");
-		histogram[i].size = atoi(arg);
+		histogram[i].height = atoi(arg);
 	}
 
-	histogram[end].size = atoi(ptr);
+	histogram[end].height = atoi(ptr);
 
 	return nr;
 }
