@@ -14,8 +14,6 @@ struct hist_block {
 	unsigned int height;
 };
 
-unsigned int nr_block;
-
 struct hist_block *histogram__new(char *input)
 {
 	int i, end, nr;
