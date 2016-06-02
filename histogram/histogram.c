@@ -14,9 +14,14 @@ struct hist_block {
 	unsigned int height;
 };
 
-int get_groups_maximum(int *group_values)
+int get_groups_maximum(int nr, int *group_values)
 {
-	int max_value;
+	int i, max_value = 0;
+
+	for (i = 0; i < nr; i++) {
+		if (max_value < group_values[i])
+			max_value = group_values[i];
+	}
 
 	return max_value;
 }
