@@ -31,12 +31,13 @@ int get_values_from(char *input)
 		return 0;
 
 	arg = strsep(&ptr, " ");
-	nr = atoi(arg);
-	histogram = malloc(sizeof(struct hist_block) * nr);
 	if (ptr == NULL) {
 		printf("Error: Need a whitespace\n");
 		return -1;
 	}
+
+	nr = atoi(arg);
+	histogram = malloc(sizeof(struct hist_block) * nr);
 
 	end = nr - 1;
 	for (i = 0; i < end; i++) {
