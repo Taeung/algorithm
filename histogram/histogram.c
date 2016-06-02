@@ -12,14 +12,15 @@
 
 struct hist_block {
 	unsigned int height;
-} *histogram;
+};
 
 unsigned int nr_block;
 
-int get_values_from(char *input)
+struct hist_block *histogram__new(char *input)
 {
 	int i, end, nr;
 	char *arg;
+	struct hist_block *histogram;
 	char *ptr = strdup(input);
 
 	if (!ptr) {
@@ -28,12 +29,12 @@ int get_values_from(char *input)
 	}
 
 	if (strlen(ptr) == 1 && atoi(ptr) == 0)
-		return 0;
+		return NULL;
 
 	arg = strsep(&ptr, " ");
 	if (ptr == NULL) {
 		printf("Error: Need a whitespace\n");
-		return -1;
+		return NULL;
 	}
 
 	nr = atoi(arg);
@@ -47,18 +48,19 @@ int get_values_from(char *input)
 
 	histogram[end].height = atoi(ptr);
 
-	return nr;
+	return histogram;
 }
 
 int main(int argc, const char **argv)
 {
 	int i, biggest_area_size = 0;
 	char input[MAX_INPUT];
+	struct hist_block *histogram;
 
 	fgets(input, sizeof(input), stdin);
 
-	nr_block = get_values_from(input);
-	if (nr_block == 0)
+	histogram = histogram__new(input);
+	if (histogram == NULL)
 		goto out;
 
 	/* fall through */
