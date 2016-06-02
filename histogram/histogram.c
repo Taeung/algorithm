@@ -14,6 +14,32 @@ struct hist_block {
 	unsigned int height;
 };
 
+int get_groups_maximum(int *group_values)
+{
+	int max_value;
+
+	return max_value;
+}
+
+int get_max_area_from_group(struct hist_block group[])
+{
+	int max_group_area = 0;
+
+	return max_group_area;
+}
+
+struct hist_block **make_groups(int nr, struct hist_block **groups)
+{
+	return groups;
+}
+
+int get_max_area(struct hist_block *histogram)
+{
+	int max_area = 0;
+
+	return max_area;
+}
+
 struct hist_block *histogram__new(char *input)
 {
 	int i, end, nr;
@@ -61,7 +87,7 @@ int main(int argc, const char **argv)
 	if (histogram == NULL)
 		goto out;
 
-	/* fall through */
+	biggest_area_size = get_max_area(histogram);
 out:
 	free(histogram);
 	printf("%d\n", biggest_area_size);
