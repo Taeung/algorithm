@@ -14,6 +14,11 @@ struct hist_block {
 	unsigned int height;
 };
 
+struct histogram {
+	int nr;
+	struct hist_block *blocks;
+};
+
 int get_groups_maximum(int nr, int *group_values)
 {
 	int i, max_value = 0;
@@ -43,18 +48,18 @@ struct hist_block **make_groups(int nr, struct hist_block **groups)
 	return groups;
 }
 
-int get_max_area(struct hist_block *histogram)
+int get_max_area(struct histogram *histogram)
 {
 	int max_area = 0;
 
 	return max_area;
 }
 
-struct hist_block *histogram__new(char *input)
+struct histogram *histogram__new(char *input)
 {
 	int i, end, nr;
 	char *arg;
-	struct hist_block *histogram;
+	struct histogram *histogram;
 	char *ptr = strdup(input);
 
 	if (!ptr) {
@@ -72,15 +77,17 @@ struct hist_block *histogram__new(char *input)
 	}
 
 	nr = atoi(arg);
-	histogram = malloc(sizeof(struct hist_block) * nr);
+	histogram = malloc(sizeof(struct histogram));
+	histogram->nr = nr;
+	histogram->blocks = malloc(sizeof(struct hist_block) * nr);
 
 	end = nr - 1;
 	for (i = 0; i < end; i++) {
 		arg = strsep(&ptr, " ");
-		histogram[i].height = atoi(arg);
+		histogram->blocks[i].height = atoi(arg);
 	}
 
-	histogram[end].height = atoi(ptr);
+	histogram->blocks[end].height = atoi(ptr);
 
 	return histogram;
 }
@@ -89,7 +96,7 @@ int main(int argc, const char **argv)
 {
 	int i, biggest_area_size = 0;
 	char input[MAX_INPUT];
-	struct hist_block *histogram;
+	struct histogram *histogram;
 
 	fgets(input, sizeof(input), stdin);
 
@@ -99,6 +106,7 @@ int main(int argc, const char **argv)
 
 	biggest_area_size = get_max_area(histogram);
 out:
+	free(histogram->blocks);
 	free(histogram);
 	printf("%d\n", biggest_area_size);
 	return 0;
