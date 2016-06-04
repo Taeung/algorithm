@@ -26,11 +26,16 @@ int get_groups_maximum(int nr, int *group_values)
 	return max_value;
 }
 
-int get_max_area_from_group(struct hist_block group[])
+int get_max_area_from_group(int nr, struct hist_block group[])
 {
-	int max_group_area = 0;
+	int i, min_height = group[0].height;
 
-	return max_group_area;
+	for (i = 1; i < nr; i++) {
+		if (min_height > group[i].height)
+			min_height = group[i].height;
+	}
+
+	return min_height * nr;
 }
 
 struct hist_block **make_groups(int nr, struct hist_block **groups)
