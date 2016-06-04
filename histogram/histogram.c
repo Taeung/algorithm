@@ -62,8 +62,30 @@ struct hist_block **make_groups(struct histogram *histogram, int per_nr)
 
 int get_max_area(struct histogram *histogram)
 {
-	int max_area = 0;
+	int i, j, max_area = 0;
+	int nr_blocks = histogram->nr;
+	struct hist_block *blocks = histogram->blocks;
 
+	for (i = 0; i < nr_blocks; i++) {
+		int hgt = blocks[i].height;
+
+		if (max_area < hgt)
+			max_area = hgt;
+	}
+
+	for (i = 2; i <= nr_blocks; i++) {
+		int max_groups = 0;
+		int nr_groups = nr_blocks - i + 1;
+		struct hist_block **groups = make_groups(histogram, i);
+		int *group_values = malloc(sizeof(int) * nr_groups);
+
+		for (j = 0; j < nr_groups; j++)
+			group_values[j] = get_max_area_from_group(nr_groups, groups[j]);
+
+		max_groups = get_groups_maximum(nr_groups, group_values);
+		if (max_area < max_groups)
+			max_area = max_groups;
+	}
 	return max_area;
 }
 
