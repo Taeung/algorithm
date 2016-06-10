@@ -126,6 +126,15 @@ struct histogram *histogram__new(char *input)
 	return histogram;
 }
 
+void histogram__delete(struct histogram *histogram)
+{
+	if (histogram == NULL)
+		return;
+
+	free(histogram->blocks);
+	free(histogram);
+}
+
 int main(int argc, const char **argv)
 {
 	int i, biggest_area_size = 0;
@@ -140,8 +149,7 @@ int main(int argc, const char **argv)
 
 	biggest_area_size = get_max_area(histogram);
 out:
-	free(histogram->blocks);
-	free(histogram);
+	histogram__delete(histogram);
 	printf("%d\n", biggest_area_size);
 	return 0;
 }
