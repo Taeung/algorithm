@@ -60,6 +60,19 @@ struct hist_block **make_groups(struct histogram *histogram, int per_nr)
 	return groups;
 }
 
+void remove_groups(int nr, struct hist_block **groups)
+{
+	int i, j;
+
+	if (groups == NULL)
+		return;
+
+	for (i = 0; i < nr; i++)
+		free(groups[i]);
+
+	free(groups);
+}
+
 int get_max_area(struct histogram *histogram)
 {
 	int i, j, max_area = 0;
@@ -85,6 +98,7 @@ int get_max_area(struct histogram *histogram)
 		max_groups = get_groups_maximum(nr_groups, group_values);
 		if (max_area < max_groups)
 			max_area = max_groups;
+		remove_groups(nr_groups, groups);
 	}
 	return max_area;
 }
