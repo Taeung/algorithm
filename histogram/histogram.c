@@ -93,7 +93,7 @@ int get_max_area(struct histogram *histogram)
 		int *group_values = malloc(sizeof(int) * nr_groups);
 
 		for (j = 0; j < nr_groups; j++)
-			group_values[j] = get_max_area_from_group(nr_groups, groups[j]);
+			group_values[j] = get_max_area_from_group(i, groups[j]);
 
 		max_groups = get_groups_maximum(nr_groups, group_values);
 		if (max_area < max_groups)
