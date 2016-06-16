@@ -43,7 +43,7 @@ int get_max_area_from_group(int nr, struct hist_block group[])
 	return min_height * nr;
 }
 
-struct hist_block **make_groups(struct histogram *histogram, int per_nr)
+struct hist_block **make_groups(int per_nr, struct histogram *histogram)
 {
 	int i, j, nr_groups = histogram->nr - per_nr + 1;
 	struct hist_block **groups = malloc(sizeof(struct hist_block *) * nr_groups);
@@ -89,7 +89,7 @@ int get_max_area(struct histogram *histogram)
 	for (i = 2; i <= nr_blocks; i++) {
 		int max_groups = 0;
 		int nr_groups = nr_blocks - i + 1;
-		struct hist_block **groups = make_groups(histogram, i);
+		struct hist_block **groups = make_groups(i, histogram);
 		int *group_values = malloc(sizeof(int) * nr_groups);
 
 		for (j = 0; j < nr_groups; j++)
