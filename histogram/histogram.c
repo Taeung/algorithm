@@ -62,7 +62,7 @@ struct hist_block **make_groups(int per_nr, struct histogram *histogram)
 
 void remove_groups(int nr, struct hist_block **groups)
 {
-	int i, j;
+	int i;
 
 	if (groups == NULL)
 		return;
@@ -152,7 +152,7 @@ void histogram__delete(struct histogram *histogram)
 
 int main(int argc, const char **argv)
 {
-	int i, biggest_area_size = 0;
+	int biggest_area_size = 0;
 	char input[MAX_INPUT];
 	struct histogram *histogram;
 
