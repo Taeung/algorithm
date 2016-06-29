@@ -40,7 +40,17 @@ int sudoku__init()
 
 int main(int argc, const char **argv)
 {
+	int i, j;
+
 	sudoku__init();
 
+	for (i = 0; i < MAX; i++) {
+		for (j = 0; j < MAX; j++) {
+			printf("%d", sudoku[i][j].num);
+			if (j != 8)
+				printf(" ");
+		}
+		printf("\n");
+	}
 	return 0;
 }
