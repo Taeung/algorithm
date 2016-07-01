@@ -20,17 +20,17 @@ struct sudoku_cell {
 
 int sudoku__init()
 {
-	int i, row, col;
+	int i, x, y;
 	char input[MAX_INPUT] = {0};
 
-	for (row = 0; row < MAX; row++) {
+	for (x = 0; x < MAX; x++) {
 		fgets(input, sizeof(input), stdin);
-		col = 0;
+		y = 0;
 		for (i = 0; i < MAX_INPUT; i++) {
 			int ch = input[i];
 
 			if (isdigit(ch))
-				sudoku[row][col++].num = input[i] - '0';
+				sudoku[x][y++].num = input[i] - '0';
 		}
 
 	}
