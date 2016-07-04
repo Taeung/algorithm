@@ -35,6 +35,15 @@ int sudoku__init()
 
 	}
 
+	for (x = 0; x < MAX; x++) {
+		struct sudoku_cell *row = &sudoku[x][0];
+
+		for (y = 0; y < MAX; y++) {
+			sudoku[x][y].row = row;
+			sudoku[x][y].col = &sudoku[0][y];
+		}
+	}
+
 	return 0;
 }
 
