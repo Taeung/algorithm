@@ -18,6 +18,28 @@ struct sudoku_cell {
 	struct sudoku_cell *box;
 } sudoku[MAX][MAX];
 
+struct index {
+	int x;
+	int y;
+};
+
+struct index which_box(int x, int y)
+{
+	struct index box_index;
+
+	if (x < 6)
+		box_index.x = x < 3 ?  0 : 3;
+	else
+		box_index.x = 6;
+
+	if (y < 6)
+		box_index.y = y < 3 ?  0 : 3;
+	else
+		box_index.y = 6;
+
+	return box_index;
+}
+
 int sudoku__init()
 {
 	int i, x, y;
@@ -39,8 +61,12 @@ int sudoku__init()
 		struct sudoku_cell *row = &sudoku[x][0];
 
 		for (y = 0; y < MAX; y++) {
+			/* first index of a box */
+			struct index box_index = which_box(x, y);
+
 			sudoku[x][y].row = row;
 			sudoku[x][y].col = &sudoku[0][y];
+			sudoku[x][y].box = &sudoku[box_index.x][box_index.y];
 		}
 	}
 
