@@ -23,6 +23,22 @@ struct index {
 	int y;
 };
 
+void check_box(struct sudoku_cell *cell)
+{
+}
+
+void check_col(struct sudoku_cell *cell)
+{
+}
+
+void check_row(struct sudoku_cell *cell)
+{
+}
+
+int sudoku__check()
+{
+}
+
 struct index which_box(int x, int y)
 {
 	struct index box_index;
