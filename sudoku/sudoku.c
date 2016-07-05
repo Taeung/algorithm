@@ -6,6 +6,7 @@
  */
 #include <stdio.h>
 #include <ctype.h>
+#include <string.h>
 
 #define MAX 9
 #define MAX_INPUT 24
@@ -13,6 +14,7 @@
 struct sudoku_cell {
 	int num;
 	int cand[MAX];
+	int cand_count;
 	struct sudoku_cell *row;
 	struct sudoku_cell *col;
 	struct sudoku_cell *box;
@@ -67,10 +69,15 @@ int sudoku__init()
 		for (i = 0; i < MAX_INPUT; i++) {
 			int ch = input[i];
 
-			if (isdigit(ch))
-				sudoku[x][y++].num = input[i] - '0';
-		}
+			if (isdigit(ch)) {
+				int num = ch - '0';
+				struct sudoku_cell *cell = &sudoku[x][y++];
 
+				cell->num = num;
+				if (num == 0)
+					cell->cand_count = 9;
+			}
+		}
 	}
 
 	for (x = 0; x < MAX; x++) {
