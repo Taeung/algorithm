@@ -62,6 +62,7 @@ int sudoku__init()
 {
 	int i, x, y;
 	char input[MAX_INPUT] = {0};
+	int cand[] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
 
 	for (x = 0; x < MAX; x++) {
 		fgets(input, sizeof(input), stdin);
@@ -74,8 +75,10 @@ int sudoku__init()
 				struct sudoku_cell *cell = &sudoku[x][y++];
 
 				cell->num = num;
-				if (num == 0)
+				if (num == 0) {
 					cell->cand_count = 9;
+					memcpy(cell->cand, cand, MAX);
+				}
 			}
 		}
 	}
