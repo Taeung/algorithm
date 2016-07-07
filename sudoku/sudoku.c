@@ -89,10 +89,13 @@ int sudoku__init()
 		for (y = 0; y < MAX; y++) {
 			/* first index of a box */
 			struct index box_index = which_box(x, y);
+			struct sudoku_cell *cell = &sudoku[x][y];
 
-			sudoku[x][y].row = row;
-			sudoku[x][y].col = &sudoku[0][y];
-			sudoku[x][y].box = &sudoku[box_index.x][box_index.y];
+			if (cell->num == 0) {
+				cell->row = row;
+				cell->col = &sudoku[0][y];
+				cell->box = &sudoku[box_index.x][box_index.y];
+			}
 		}
 	}
 
