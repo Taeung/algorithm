@@ -11,19 +11,19 @@
 #define MAX 9
 #define MAX_INPUT 24
 
+struct index {
+	int x;
+	int y;
+};
+
 struct sudoku_cell {
 	int num;
 	int cand[MAX];
 	int cand_count;
 	struct sudoku_cell *row;
 	struct sudoku_cell *col;
-	struct sudoku_cell *box;
+	struct index box_index;
 } sudoku[MAX][MAX];
-
-struct index {
-	int x;
-	int y;
-};
 
 void check_box(struct sudoku_cell *cell)
 {
@@ -87,14 +87,12 @@ int sudoku__init()
 		struct sudoku_cell *row = &sudoku[x][0];
 
 		for (y = 0; y < MAX; y++) {
-			/* first index of a box */
-			struct index box_index = which_box(x, y);
 			struct sudoku_cell *cell = &sudoku[x][y];
 
 			if (cell->num == 0) {
 				cell->row = row;
 				cell->col = &sudoku[0][y];
-				cell->box = &sudoku[box_index.x][box_index.y];
+				cell->box_index = which_box(x, y);
 			}
 		}
 	}
