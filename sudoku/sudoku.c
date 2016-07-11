@@ -25,6 +25,11 @@ struct sudoku_cell {
 	struct index box_index;
 } sudoku[MAX][MAX];
 
+int set_number(struct sudoku_cell *cell)
+{
+	return 0;
+}
+
 void check_box(struct sudoku_cell *cell)
 {
 }
