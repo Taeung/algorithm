@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
+#include <stdbool.h>
 
 #define MAX 9
 #define MAX_INPUT 24
@@ -44,6 +45,30 @@ void check_row(struct sudoku_cell *cell)
 
 int sudoku__check()
 {
+	int ret, x, y;
+	bool changed = false;
+
+	for (x = 0; x < MAX; x++) {
+		for (y = 0; y < MAX; y++) {
+			struct sudoku_cell *cell = &sudoku[x][y];
+
+			if (cell->num == 0) {
+				check_row(cell);
+				check_col(cell);
+				check_box(cell);
+				ret = set_number(cell);
+				if (ret == -1)
+					return -1;
+				if (ret == 1)
+					changed = true;
+			}
+		}
+	}
+
+	if (changed)
+		return 1;
+	else
+		return 0;
 }
 
 struct index which_box(int x, int y)
