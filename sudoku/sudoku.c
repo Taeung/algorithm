@@ -33,6 +33,23 @@ int set_number(struct sudoku_cell *cell)
 
 void check_box(struct sudoku_cell *cell)
 {
+	int i, j;
+	int x = cell->box_index.x;
+	int y = cell->box_index.y;
+	int end_x = x + 3;
+	int end_y = y + 3;
+
+	for (i = x; i < end_x; i++) {
+		for (j = y; j < end_y; j++) {
+			int num = sudoku[x][y].num;
+
+			if (num != 0 && cell->cand[num-1] != 0) {
+				cell->cand[num-1] = 0;
+				cell->cand_count--;
+			}
+		}
+	}
+
 }
 
 void check_col(struct sudoku_cell *cell)
