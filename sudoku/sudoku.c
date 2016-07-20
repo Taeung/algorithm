@@ -28,6 +28,22 @@ struct sudoku_cell {
 
 int set_number(struct sudoku_cell *cell)
 {
+	int i;
+
+	if (cell->cand_count == 0)
+		return -1;
+
+	if (cell->cand_count == 1) {
+		for (i = 0; i < MAX; i++) {
+			int num = cell->cand[i];
+
+			if (num != 0) {
+				cell->num = num;
+				return 1;
+			}
+		}
+	}
+
 	return 0;
 }
 
