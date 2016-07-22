@@ -98,7 +98,7 @@ void check_row(struct sudoku_cell *cell)
 	}
 }
 
-int sudoku__check()
+int sudoku__scan_and_set_num()
 {
 	int ret, x, y;
 	bool changed = false;
