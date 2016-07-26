@@ -187,9 +187,13 @@ int sudoku__init()
 
 int main(int argc, const char **argv)
 {
+	int ret;
 	int i, j;
 
 	sudoku__init();
+	ret = sudoku__scan_and_set_num();
+	if (ret < 0)
+		return -1;
 
 	for (i = 0; i < MAX; i++) {
 		for (j = 0; j < MAX; j++) {
