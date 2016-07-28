@@ -71,15 +71,16 @@ void check_box(struct sudoku_cell *cell)
 void check_col(struct sudoku_cell *cell)
 {
 	int i;
-	struct sudoku_cell *col = cell->row;
+	struct sudoku_cell *col = cell->col;
 
 	for (i = 0; i < MAX; i++) {
-		int num = col[i].num;
+		int num = col->num;
 
 		if (num != 0 && cell->cand[num-1] != 0) {
 			cell->cand[num-1] = 0;
 			cell->cand_count--;
 		}
+		col+=9;
 	}
 }
 
