@@ -163,7 +163,7 @@ int sudoku__init()
 				cell->num = num;
 				if (num == 0) {
 					cell->cand_count = 9;
-					memcpy(cell->cand, cand, MAX);
+					memcpy(cell->cand, cand, MAX * sizeof(int));
 				}
 			}
 		}
