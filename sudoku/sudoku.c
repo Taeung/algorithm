@@ -113,8 +113,12 @@ int sudoku__scan_and_set_num()
 				check_col(cell);
 				check_box(cell);
 				ret = set_number(cell);
-				if (ret == -1)
+				if (ret == -1) {
+					printf("Error: there aren't any numbers"
+					       "that can be written on a cell "
+					       "(%d, %d)\n", x, y);
 					return -1;
+				}
 				if (ret == 1)
 					changed = true;
 			}
